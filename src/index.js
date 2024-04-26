@@ -10,7 +10,7 @@ function removePrefix0 (str){
 }
 
 function createGuid(i) {
-  const randomNum = Math.floor(999999 * Math.random());
+  const randomNum = Math.floor(1011947 * Math.random());
   const str = randomNum.toString(16);
   const len = str.length;
   if (len < 6) {
@@ -40,7 +40,9 @@ new CustomBtn('removePrefix0', () => {
 })
 
 new CustomBtn('realData1million', () => {
-  // 真实数据
+  // realData
+  // 1007359
+  // 1011947
   guidArr = guidStr.split('|');
   featureAry = [];
   map.clear()
@@ -76,12 +78,13 @@ new CustomBtn('randomData1', () => {
   map.clear()
 
 
-  for (let i = 0; i < 1014567; i++) {
+  for (let i = 0; i < 1007359; i++) {
     const guid = createGuid(i);
     guidArr.push(guid);
-    if (Math.random() > 0.1) {
-      featureAry.push(guid);
-    }
+  }
+  for (let i=0; i<1011947; i++) {
+    const guid = createGuid(i);
+    featureAry.push(guid);
   }
 
   if(isSorted) {
@@ -95,6 +98,7 @@ new CustomBtn('randomData1', () => {
   }
 
   console.log('guidArr ', guidArr);
+  console.log('testAry ', featureAry);
   // const set = new Set(guidArr);
   // console.log('guidArr length ', guidArr.length);
   // console.log(' uniq guid is ', set.size)
@@ -114,8 +118,8 @@ new CustomBtn('testRegExpTestSpeed', () => {
   const featureLeng = featureAry.length
   console.log(' map start totalLen searchLength ', guidArr.length, featureLeng);
 
-  console.time('reg exp test');
   let i = 0;
+  console.time('reg exp test');
   while (i < featureLeng) {
     const feature = featureAry[i];
     const result = regExp.test(feature);
@@ -134,7 +138,7 @@ new CustomBtn('testMapSpeed', () => {
   const featureLeng = featureAry.length
   console.log(' map start totalLen searchLength ', guidArr.length, featureLeng);
   guidArr.forEach((guid) => {
-    map.set(guid, "");
+    map.set(guid, 1);
   })
   let i = 0;
   console.time('map get');
