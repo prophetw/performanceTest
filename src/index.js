@@ -4,6 +4,11 @@ import { CustomBtn } from './UIComponent'
 const { guidStr, guidAryStr } = AllData // 1 million guid from real project 
 const testFeatureGuidAry = JSON.parse(guidAryStr)
 
+function removePrefix0 (str){
+  // input is   000e84   output is e84 
+  return str.replace(/^0+/, '')  
+}
+
 function createGuid(i) {
   const randomNum = Math.floor(999999 * Math.random());
   const str = randomNum.toString(16);
@@ -21,16 +26,25 @@ let featureAry;
 let guidArr;
 let regExp;
 let isSorted = false;
+let isRemovePrefix = false;
+let map = new Map();
 
 new CustomBtn('sorted', () => {
   isSorted = !isSorted;
   console.log(' isSorted: ', isSorted);
 })
 
+new CustomBtn('removePrefix0', () => {
+  isRemovePrefix = !isRemovePrefix;
+  console.log(' isRemovePrefix: ', isRemovePrefix);
+})
+
 new CustomBtn('realData1million', () => {
   // 真实数据
   guidArr = guidStr.split('|');
   featureAry = [];
+  map.clear()
+
   for (let i = 0; i < testFeatureGuidAry.length; i++) {
     featureAry.push(testFeatureGuidAry[i]);
   }
@@ -38,6 +52,11 @@ new CustomBtn('realData1million', () => {
   if(isSorted) {
     featureAry.sort();
     guidArr.sort();
+  }
+
+  if(isRemovePrefix){
+    featureAry = featureAry.map(removePrefix0)
+    guidArr = guidArr.map(removePrefix0)
   }
 
   console.log('regExp', guidArr);
@@ -54,6 +73,9 @@ new CustomBtn('randomData1', () => {
   // random 1 million 
   featureAry = [];
   guidArr = []
+  map.clear()
+
+
   for (let i = 0; i < 1014567; i++) {
     const guid = createGuid(i);
     guidArr.push(guid);
@@ -62,11 +84,16 @@ new CustomBtn('randomData1', () => {
     }
   }
 
-
   if(isSorted) {
     featureAry.sort();
     guidArr.sort();
   }
+
+  if(isRemovePrefix){
+    featureAry = featureAry.map(removePrefix0)
+    guidArr = guidArr.map(removePrefix0)
+  }
+
   console.log('guidArr ', guidArr);
   // const set = new Set(guidArr);
   // console.log('guidArr length ', guidArr.length);
@@ -98,7 +125,6 @@ new CustomBtn('testRegExpTestSpeed', () => {
 })
 
 
-let map = new Map();
 
 new CustomBtn('testMapSpeed', () => {
   if (!regExp) {
