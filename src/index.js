@@ -43,7 +43,19 @@ new CustomBtn('realData1million', () => {
   // realData
   // 1007359
   // 1011947
+  // real data
   guidArr = guidStr.split('|');
+
+  // random data
+  // guidArr = []
+  // let count1 = 1007359;
+  // let count2 = 1011947;
+  // for (let i = 0; i < count1 ; i++) {
+  //   const guid = createGuid(i);
+  //   guidArr.push(guid);
+  // }
+
+
   featureAry = [];
   map.clear()
 
@@ -52,7 +64,7 @@ new CustomBtn('realData1million', () => {
   }
 
   if(isSorted) {
-    featureAry.sort();
+    // featureAry.sort();
     guidArr.sort();
   }
 
@@ -77,12 +89,18 @@ new CustomBtn('randomData1', () => {
   guidArr = []
   map.clear()
 
+  // let count1 = 1007359;
+  // let count2 = 1011947;
 
-  for (let i = 0; i < 1007359; i++) {
+  let count1 = 100000;
+  let count2 = 100000;
+
+
+  for (let i = 0; i < count1 ; i++) {
     const guid = createGuid(i);
     guidArr.push(guid);
   }
-  for (let i=0; i<1011947; i++) {
+  for (let i=0; i<count2; i++) {
     const guid = createGuid(i);
     featureAry.push(guid);
   }
@@ -145,6 +163,31 @@ new CustomBtn('testMapSpeed', () => {
   while (i < featureLeng) {
     const feature = featureAry[i];
     const result = map.get(feature);
+    i++;
+  }
+  console.timeEnd('map get');
+})
+
+new CustomBtn('testStrIndexOfSpeed', () => {
+  if (!regExp) {
+    console.error('please create guidArr and featureAry first');
+    return;
+  }
+  const featureLeng = featureAry.length
+  console.log(' map start totalLen searchLength ', guidArr.length, featureLeng);
+  const totalStr = guidArr.join('|');
+  let i = 0;
+  let lastIdx = 0;
+  console.time('map get');
+  while (i < featureLeng) {
+    const feature = featureAry[i];
+    // if(lastIdx > -1) {
+    //   lastIdx = totalStr.indexOf(feature, lastIdx);
+    //   if(lastIdx > -1){
+    //     continue;
+    //   }
+    // }
+    lastIdx = totalStr.indexOf(feature);
     i++;
   }
   console.timeEnd('map get');
