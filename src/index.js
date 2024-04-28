@@ -10,7 +10,7 @@ function removePrefix0 (str){
 }
 
 function createGuid(i) {
-  const randomNum = Math.floor(1011947 * Math.random());
+  const randomNum = Math.floor(4000000 * Math.random());
   const str = randomNum.toString(16);
   const len = str.length;
   if (len < 6) {
@@ -89,11 +89,11 @@ new CustomBtn('randomData1', () => {
   guidArr = []
   map.clear()
 
-  // let count1 = 1007359;
-  // let count2 = 1011947;
+  let count1 = 1007359;
+  let count2 = 1011947;
 
-  let count1 = 100000;
-  let count2 = 100000;
+  // let count1 = 100000;
+  // let count2 = 100000;
 
 
   for (let i = 0; i < count1 ; i++) {
@@ -106,8 +106,8 @@ new CustomBtn('randomData1', () => {
   }
 
   if(isSorted) {
-    featureAry.sort();
     guidArr.sort();
+    featureAry.sort();
   }
 
   if(isRemovePrefix){
@@ -138,12 +138,22 @@ new CustomBtn('testRegExpTestSpeed', () => {
 
   let i = 0;
   console.time('reg exp test');
+  let resObj = {
+    trueRes: 0,
+    falseRes: 0
+  };
   while (i < featureLeng) {
     const feature = featureAry[i];
     const result = regExp.test(feature);
+    if(result){
+      resObj.trueRes += 1;
+    }else{
+      resObj.falseRes += 1;
+    }
     i++;
   }
   console.timeEnd('reg exp test');
+  console.log(' 结果 ', resObj);
 })
 
 
@@ -159,13 +169,24 @@ new CustomBtn('testMapSpeed', () => {
     map.set(guid, 1);
   })
   let i = 0;
+
+  let resObj = {
+    trueRes: 0,
+    falseRes: 0
+  };
   console.time('map get');
   while (i < featureLeng) {
     const feature = featureAry[i];
     const result = map.get(feature);
+    if(result){
+      resObj.trueRes += 1;
+    }else{
+      resObj.falseRes += 1;
+    }
     i++;
   }
   console.timeEnd('map get');
+  console.log(' 结果 ', resObj);
 })
 
 new CustomBtn('testStrIndexOfSpeed', () => {
@@ -178,6 +199,11 @@ new CustomBtn('testStrIndexOfSpeed', () => {
   const totalStr = guidArr.join('|');
   let i = 0;
   let lastIdx = 0;
+
+  let resObj = {
+    trueRes: 0,
+    falseRes: 0
+  };
   console.time('map get');
   while (i < featureLeng) {
     const feature = featureAry[i];
@@ -189,6 +215,13 @@ new CustomBtn('testStrIndexOfSpeed', () => {
     // }
     lastIdx = totalStr.indexOf(feature);
     i++;
+
+    if(lastIdx !== -1){
+      resObj.trueRes += 1;
+    }else{
+      resObj.falseRes += 1;
+    }
   }
   console.timeEnd('map get');
+  console.log(' 结果 ', resObj);
 })
